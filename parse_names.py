@@ -1,6 +1,7 @@
 from enum import Enum
 import pandas as pd
 import json
+import math
 
 from utils import clean_arabic_chars, clean_irabs
 
@@ -27,9 +28,9 @@ def parse_csv(input_filename):
         name = clean_irabs(clean_arabic_chars(row[name_column]))
 
         gender = Gender.unknown
-        if "Pesar" in df.columns and row["Pesar"]:
+        if "Pesar" in df.columns and not math.isnan(row["Pesar"]):
             gender = Gender.male
-        elif "Dokhtar" in df.columns and row["Dokhtar"]:
+        elif "Dokhtar" in df.columns and not math.isnan(row["Dokhtar"]):
             gender = Gender.female
 
         row_data = {"name": name, "gender": gender.value}
